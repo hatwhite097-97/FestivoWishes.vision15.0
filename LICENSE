@@ -1,21 +1,297 @@
-MIT License
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Festivo Online - Global Holiday Wishes</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/2274/2274813.png">
 
-Copyright (c) 2026 hatwhite097-97
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Montserrat:wght@300;400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+    <style>
+        :root {
+            --primary-gold: #d4af37;
+            --dark-gold: #996515;
+            --emerald: #064e3b;
+            --glass: rgba(255, 255, 255, 0.95);
+            --text: #2c3e50;
+        }
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: url('https://d.uguu.se/JVsKFZBD.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        /* Music Floating Button */
+        .music-fab {
+            position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px;
+            background: var(--primary-gold); border-radius: 50%; display: flex;
+            align-items: center; justify-content: center; cursor: pointer;
+            z-index: 1000; box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            border: 3px solid white;
+        }
+        .music-fab i { color: white; font-size: 1.5rem; }
+        .rotating { animation: rotate 3s linear infinite; }
+        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        /* Navigation Header */
+        header {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            position: sticky; top: 0; z-index: 900;
+            padding: 15px 5%; display: flex;
+            justify-content: space-between; align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .logo { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--emerald); font-weight: 700; text-decoration: none; }
+        
+        nav ul { display: flex; list-style: none; gap: 20px; }
+        nav ul li a { text-decoration: none; color: var(--text); font-size: 0.85rem; font-weight: 600; transition: 0.3s; }
+        nav ul li a:hover { color: var(--primary-gold); }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; display: flex; flex-direction: column; align-items: center; }
+
+        /* Main Card */
+        .main-card {
+            background: var(--glass); width: 100%; max-width: 600px;
+            border-radius: 40px; padding: 40px; text-align: center;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.15); margin-bottom: 50px;
+        }
+
+        h1 { font-family: 'Amiri', serif; font-size: 3rem; color: var(--primary-gold); margin-bottom: 20px; }
+        
+        .input-group { margin-bottom: 20px; text-align: left; }
+        label { display: block; font-size: 0.7rem; font-weight: 700; color: var(--primary-gold); margin-bottom: 5px; text-transform: uppercase; margin-left: 15px; }
+        input {
+            width: 100%; padding: 18px 25px; border-radius: 35px; border: 1px solid #eee;
+            font-size: 1rem; outline: none; transition: 0.3s; background: #fff;
+        }
+        input:focus { border-color: var(--primary-gold); box-shadow: 0 0 15px rgba(212, 175, 55, 0.1); }
+
+        .btn-send {
+            background: linear-gradient(135deg, var(--primary-gold), var(--dark-gold));
+            color: white; border: none; padding: 20px; width: 100%;
+            border-radius: 35px; font-size: 1.1rem; font-weight: 700;
+            cursor: pointer; transition: 0.4s; margin-top: 10px;
+        }
+        .btn-send:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(153, 101, 21, 0.3); }
+
+        /* Sections */
+        section { width: 100%; max-width: 900px; margin-bottom: 60px; padding: 40px; background: rgba(255,255,255,0.8); border-radius: 30px; line-height: 1.8; }
+        section h2 { font-family: 'Playfair Display', serif; color: var(--emerald); margin-bottom: 20px; font-size: 2rem; border-bottom: 2px solid var(--primary-gold); display: inline-block; }
+
+        /* Footer */
+        footer { width: 100%; background: #2c3e50; color: white; padding: 50px 5%; text-align: center; }
+        .footer-links { display: flex; justify-content: center; gap: 30px; margin-bottom: 20px; flex-wrap: wrap; }
+        .footer-links a { color: white; text-decoration: none; font-size: 0.9rem; opacity: 0.8; }
+        
+        #result-view { display: none; }
+        .typing-box { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--primary-gold); margin-bottom: 30px; min-height: 40px; }
+        
+        .whatsapp-share {
+            background: #25D366; color: white; text-decoration: none;
+            padding: 20px; border-radius: 35px; display: flex;
+            align-items: center; justify-content: center; gap: 10px;
+            font-weight: 700; margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            nav { display: none; } /* Mobile menu can be added later */
+            h1 { font-size: 2.2rem; }
+        }
+    </style>
+</head>
+<body onclick="initAudio()">
+
+    <!-- Audio Element -->
+    <audio id="bgMusic" loop>
+        <source src="https://o.uguu.se/sdMmvhVt.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Music FAB -->
+    <div class="music-fab" id="musicBtn" onclick="toggleMusic(event)">
+        <i class="fas fa-music"></i>
+    </div>
+
+    <header>
+        <a href="#" class="logo">Festivo Online</a>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#wishes">Eid Wishes</a></li>
+                <li><a href="#quotes">Quotes</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container" id="home">
+        
+        <!-- GEN CARD -->
+        <div class="main-card">
+            <div id="setup-view">
+                <h1>Eid Mubarak</h1>
+                <p style="margin-bottom: 30px; opacity: 0.7;">Tengeneza salamu ya kisasa yenye muziki na ishare duniani kote.</p>
+                
+                <div class="input-group">
+                    <label>Jina Lako (Sender)</label>
+                    <input type="text" id="senderName" placeholder="Andika jina lako...">
+                </div>
+
+                <div class="input-group">
+                    <label>Jina la Rafiki (Recipient)</label>
+                    <input type="text" id="receiverName" placeholder="Andika jina la rafiki...">
+                </div>
+
+                <button class="btn-send" onclick="generateWish()">Tengeneza & Share ✨</button>
+            </div>
+
+            <div id="result-view">
+                <div id="typing" class="typing-box"></div>
+                <div style="text-align: right; font-family: 'Amiri', serif; font-size: 1.5rem; color: var(--emerald);" id="ar-text"></div>
+                <p id="en-text" style="margin: 20px 0; font-style: italic;"></p>
+                <p id="sw-text" style="margin-bottom: 30px; font-weight: 600;"></p>
+
+                <a href="#" id="waLink" class="whatsapp-share">
+                    <i class="fab fa-whatsapp"></i> Share on WhatsApp
+                </a>
+                
+                <button onclick="location.reload()" style="background:none; border:none; color:var(--primary-gold); margin-top:25px; cursor:pointer; font-weight:bold; text-decoration: underline;">
+                    ⬅ Tengeneza Nyingine
+                </button>
+            </div>
+        </div>
+
+        <!-- SEO SECTIONS (Para kwa ajili ya Adsense) -->
+        <section id="wishes">
+            <h2>Eid Wishes Across the Globe</h2>
+            <p>Sikukuu ya Eid Mubarak ni zaidi ya kusherehekea; ni wakati wa kuungana na wapendwa wetu popote walipo duniani. Festivo Online inakuletea teknolojia ya kisasa ya kutuma salamu kwa njia ya kipekee. Iwe upo Muscat, London, New York au Dar es Salaam, ujumbe wako utamfikia mlengwa ukiwa na muziki mwanana na maneno ya kheri.</p>
+            <p>Ujumbe wetu wa Kiarabu (Arabic Eid Wishes) umeandaliwa kwa ufasaha mkubwa ili kuwapa heshima marafiki na ndugu wa nchi za Mashariki ya Kati kama Oman, UAE na Saudi Arabia.</p>
+        </section>
+
+        <section id="quotes">
+            <h2>Inspiration & Quotes</h2>
+            <p>"Kheri ya Eid iambatane na amani ya moyo na baraka za Mungu zikufuate kila hatua." Huu ni moja ya ujumbe wetu pendwa. Sisi Festivo Online hatuishii kwenye Eid tu; tunatambua kuwa maisha yana sherehe nyingi. Website hii imetengenezwa kubadilika kulingana na msimu. Baada ya Eid, tutakuwa na salamu za <strong>Christmas, Valentine's Day, Pasaka, na Siku za Kuzaliwa (Birthdays).</strong></p>
+        </section>
+
+        <section id="about">
+            <h2>About Festivo Online</h2>
+            <p>Festivo Online ni portal ya kimataifa iliyojikita katika kuleta tabasamu kupitia salamu za kidijitali. Tunatumia teknolojia ya kisasa kuhakikisha kuwa umbali wa nchi hauzuii kheri na baraka kufika. Huduma zetu zinapatikana duniani kote, zikigusa tamaduni tofauti kwa lugha za Kiarabu, Kiingereza na Kiswahili.</p>
+        </section>
+
+        <section id="privacy">
+            <h2>Privacy Policy</h2>
+            <p>Tunathamini usalama wa data zako. Jina unaloandika hapa linatumika tu kutengeneza salamu yako na halihifadhiwi kwenye server zetu kwa matumizi mengine yoyote. Festivo Online ni mahali salama kwa wewe na familia yako kusherehekea.</p>
+        </section>
+
+        <section id="contact">
+            <h2>Contact Us</h2>
+            <p>Una swali au unahitaji msaada wa kiufundi? Wasiliana nasi kupitia:</p>
+            <p><strong>Email:</strong> info@festivo.online</p>
+            <p><strong>WhatsApp/Phone:</strong> +255 612929319</p>
+            <p>Tunapatikana saa 24 kukuhudumia popote ulipo duniani.</p>
+        </section>
+
+    </div>
+
+    <footer>
+        <div class="footer-links">
+            <a href="#home">Home</a>
+            <a href="#wishes">Eid Wishes</a>
+            <a href="#about">About Us</a>
+            <a href="#privacy">Privacy Policy</a>
+            <a href="#contact">Contact</a>
+            <a href="#">Terms of Service</a>
+        </div>
+        <p>© 2025 Festivo Online - Celebrating Humanity Worldwide.</p>
+    </footer>
+
+    <script>
+        const audio = document.getElementById('bgMusic');
+        const musicBtn = document.getElementById('musicBtn');
+        let audioStarted = false;
+
+        function initAudio() {
+            if (!audioStarted) {
+                audio.play();
+                musicBtn.classList.add('rotating');
+                audioStarted = true;
+            }
+        }
+
+        function toggleMusic(e) {
+            e.stopPropagation();
+            if (audio.paused) {
+                audio.play();
+                musicBtn.classList.add('rotating');
+            } else {
+                audio.pause();
+                musicBtn.classList.remove('rotating');
+            }
+        }
+
+        function generateWish() {
+            const sender = document.getElementById('senderName').value;
+            const receiver = document.getElementById('receiverName').value;
+
+            if(!sender || !receiver) {
+                alert("Tafadhali jaza majina yote!");
+                return;
+            }
+
+            initAudio(); // Start music on click if not started
+
+            document.getElementById('setup-view').style.display = 'none';
+            document.getElementById('result-view').style.display = 'block';
+
+            // Long Messages
+            const ar = `إلى ${receiver} العزيز، بمناسبة عيد الفطر السعيد، يتمنى لك ${sender} حياة مليئة بالبركات والنجاحات. عيد مبارك وسعيد!`;
+            const en = `Dear ${receiver}, on this joyous Eid, ${sender} wishes you divine happiness and endless peace. May all your prayers be answered today. Eid Mubarak!`;
+            const sw = `Ndugu yangu ${receiver}, katika kheri ya Eid Mubarak, ${sender} anakuombea baraka tele, afya na mafanikio yasiyo na mwisho. Sikukuu Njema!`;
+
+            document.getElementById('ar-text').innerText = ar;
+            document.getElementById('en-text').innerText = en;
+            document.getElementById('sw-text').innerText = sw;
+
+            // Typing Effect
+            let i = 0;
+            const text = `${sender} anakutakia...`;
+            function type() {
+                if (i < text.length) {
+                    document.getElementById('typing').innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, 100);
+                }
+            }
+            type();
+
+            // WhatsApp Link
+            const currentUrl = window.location.href.split('?')[0].split('#')[0];
+            const waMsg = `*${sender}* amekutumia salamu ya *Eid Mubarak* yenye muziki! 🌙✨\nFungua hapa uone ujumbe wako:\n${currentUrl}?f=${encodeURIComponent(sender)}&t=${encodeURIComponent(receiver)}`;
+            document.getElementById('waLink').href = `https://wa.me/?text=${encodeURIComponent(waMsg)}`;
+        }
+
+        // Auto-load if shared
+        window.onload = function() {
+            const p = new URLSearchParams(window.location.search);
+            const f = p.get('f');
+            const t = p.get('t');
+            if(f && t) {
+                document.getElementById('senderName').value = f;
+                document.getElementById('receiverName').value = t;
+                generateWish();
+            }
+        }
+    </script>
+</body>
+</html>
